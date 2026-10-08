@@ -15,47 +15,57 @@ var app = builder.Build();
 
 app.UseCors();
 
+var empresaData = new
+{
+    id = 1,
+    codigo = "E001",
+    nombre = "Abarrotes La Esquina",
+    eslogan = "Tu despensa de siempre, ahora a un clic",
+    direccion = "Jr. Los Olivos 245",
+    telefono = "+51 955 321 654",
+    horarioAtencion = "Lunes a domingo, 07:00 - 22:00",
+    valores = new[]
+    {
+        new { titulo = "Frescura diaria", texto = "Frutas y lácteos que llegan cada mañana." },
+        new { titulo = "Precios online", texto = "Ofertas exclusivas que se actualizan cada semana." },
+        new { titulo = "Delivery rápido", texto = "Te lo llevamos a casa o lo recoges en tienda." },
+        new { titulo = "Atención de barrio", texto = "Un equipo que te conoce y te recomienda." }
+    }
+};
+
+var categoriasData = new[]
+{
+    new { id = "abarrotes", nombre = "Abarrotes", descripcion = "Arroz, aceite, fideos y conservas para tu despensa." },
+    new { id = "lacteos", nombre = "Lácteos", descripcion = "Leches, yogures y quesos de las mejores marcas." },
+    new { id = "frutas", nombre = "Frutas", descripcion = "Fruta fresca seleccionada cada día." },
+    new { id = "limpieza", nombre = "Limpieza", descripcion = "Detergentes, lejía y lavavajillas para el hogar." }
+};
+
+var promocionesData = new[]
+{
+    new { id = 1, codigo = "PR001", titulo = "Semana de la despensa", descripcion = "Precios rebajados en arroz, aceite y conservas.", categoria = "abarrotes", etiqueta = "Hasta 15% menos", activa = true },
+    new { id = 2, codigo = "PR002", titulo = "Packs lácteos familiares", descripcion = "Ahorra llevando tripacks y sixpacks de leche.", categoria = "lacteos", etiqueta = "Packs con descuento", activa = true },
+    new { id = 3, codigo = "PR003", titulo = "Fruta de temporada", descripcion = "Mandarina y plátano a precio especial.", categoria = "frutas", etiqueta = "Oferta de la semana", activa = true },
+    new { id = 4, codigo = "PR004", titulo = "Limpieza del hogar", descripcion = "Detergente en oferta para toda la familia.", categoria = "limpieza", etiqueta = "Hasta 21% menos", activa = true },
+    new { id = 5, codigo = "PR005", titulo = "Promo Fiestas Patrias", descripcion = "Campaña finalizada.", categoria = "abarrotes", etiqueta = "Finalizada", activa = false }
+};
+
+var entregasData = new[]
+{
+    new { id = 1, nombre = "Recojo en tienda", descripcion = "Recoge tu pedido en 30 minutos en Jr. Los Olivos 245.", costo = 0, requiereDireccion = false },
+    new { id = 2, nombre = "Delivery estándar", descripcion = "Entrega en el día dentro del distrito.", costo = 5, requiereDireccion = true },
+    new { id = 3, nombre = "Delivery express", descripcion = "Entrega en 60 minutos.", costo = 8, requiereDireccion = true }
+};
+
 app.MapGet("/", () => Results.Ok(new
 {
-    empresa = new
-    {
-        id = 1,
-        codigo = "E001",
-        nombre = "Abarrotes La Esquina",
-        eslogan = "Tu despensa de siempre, ahora a un clic",
-        direccion = "Jr. Los Olivos 245",
-        telefono = "+51 955 321 654",
-        horarioAtencion = "Lunes a domingo, 07:00 - 22:00",
-        valores = new[]
-        {
-            new { titulo = "Frescura diaria", texto = "Frutas y lácteos que llegan cada mañana." },
-            new { titulo = "Precios online", texto = "Ofertas exclusivas que se actualizan cada semana." },
-            new { titulo = "Delivery rápido", texto = "Te lo llevamos a casa o lo recoges en tienda." },
-            new { titulo = "Atención de barrio", texto = "Un equipo que te conoce y te recomienda." }
-        }
-    },
-    categorias = new[]
-    {
-        new { id = "abarrotes", nombre = "Abarrotes", descripcion = "Arroz, aceite, fideos y conservas para tu despensa." },
-        new { id = "lacteos", nombre = "Lácteos", descripcion = "Leches, yogures y quesos de las mejores marcas." },
-        new { id = "frutas", nombre = "Frutas", descripcion = "Fruta fresca seleccionada cada día." },
-        new { id = "limpieza", nombre = "Limpieza", descripcion = "Detergentes, lejía y lavavajillas para el hogar." }
-    },
-    promociones = new[]
-    {
-        new { id = 1, codigo = "PR001", titulo = "Semana de la despensa", descripcion = "Precios rebajados en arroz, aceite y conservas.", categoria = "abarrotes", etiqueta = "Hasta 15% menos", activa = true },
-        new { id = 2, codigo = "PR002", titulo = "Packs lácteos familiares", descripcion = "Ahorra llevando tripacks y sixpacks de leche.", categoria = "lacteos", etiqueta = "Packs con descuento", activa = true },
-        new { id = 3, codigo = "PR003", titulo = "Fruta de temporada", descripcion = "Mandarina y plátano a precio especial.", categoria = "frutas", etiqueta = "Oferta de la semana", activa = true },
-        new { id = 4, codigo = "PR004", titulo = "Limpieza del hogar", descripcion = "Detergente en oferta para toda la familia.", categoria = "limpieza", etiqueta = "Hasta 21% menos", activa = true },
-        new { id = 5, codigo = "PR005", titulo = "Promo Fiestas Patrias", descripcion = "Campaña finalizada.", categoria = "abarrotes", etiqueta = "Finalizada", activa = false }
-    },
-    entregas = new[]
-    {
-        new { id = 1, nombre = "Recojo en tienda", descripcion = "Recoge tu pedido en 30 minutos en Jr. Los Olivos 245.", costo = 0, requiereDireccion = false },
-        new { id = 2, nombre = "Delivery estándar", descripcion = "Entrega en el día dentro del distrito.", costo = 5, requiereDireccion = true },
-        new { id = 3, nombre = "Delivery express", descripcion = "Entrega en 60 minutos.", costo = 8, requiereDireccion = true }
-    }
+    empresa = empresaData,
+    categorias = categoriasData,
+    promociones = promocionesData,
+    entregas = entregasData
 }));
+
+app.MapGet("/api/empresa", () => Results.Ok(empresaData));
 
 var productos = new[]
 {
@@ -126,29 +136,11 @@ app.MapGet("/api/productos/{id:int}", (int id) =>
         : Results.NotFound(new { mensaje = "Producto no encontrado" });
 });
 
-app.MapGet("/api/categorias", () => Results.Ok(new[]
-{
-    new { id = "abarrotes", nombre = "Abarrotes", descripcion = "Arroz, aceite, fideos y conservas para tu despensa." },
-    new { id = "lacteos", nombre = "Lácteos", descripcion = "Leches, yogures y quesos de las mejores marcas." },
-    new { id = "frutas", nombre = "Frutas", descripcion = "Fruta fresca seleccionada cada día." },
-    new { id = "limpieza", nombre = "Limpieza", descripcion = "Detergentes, lejía y lavavajillas para el hogar." }
-}));
+app.MapGet("/api/categorias", () => Results.Ok(categoriasData));
 
-app.MapGet("/api/promociones", () => Results.Ok(new[]
-{
-    new { id = 1, codigo = "PR001", titulo = "Semana de la despensa", descripcion = "Precios rebajados en arroz, aceite y conservas.", categoria = "abarrotes", etiqueta = "Hasta 15% menos", activa = true },
-    new { id = 2, codigo = "PR002", titulo = "Packs lácteos familiares", descripcion = "Ahorra llevando tripacks y sixpacks de leche.", categoria = "lacteos", etiqueta = "Packs con descuento", activa = true },
-    new { id = 3, codigo = "PR003", titulo = "Fruta de temporada", descripcion = "Mandarina y plátano a precio especial.", categoria = "frutas", etiqueta = "Oferta de la semana", activa = true },
-    new { id = 4, codigo = "PR004", titulo = "Limpieza del hogar", descripcion = "Detergente en oferta para toda la familia.", categoria = "limpieza", etiqueta = "Hasta 21% menos", activa = true },
-    new { id = 5, codigo = "PR005", titulo = "Promo Fiestas Patrias", descripcion = "Campaña finalizada.", categoria = "abarrotes", etiqueta = "Finalizada", activa = false }
-}));
+app.MapGet("/api/promociones", () => Results.Ok(promocionesData));
 
-app.MapGet("/api/entregas", () => Results.Ok(new[]
-{
-    new { id = 1, nombre = "Recojo en tienda", descripcion = "Recoge tu pedido en 30 minutos en Jr. Los Olivos 245.", costo = 0, requiereDireccion = false },
-    new { id = 2, nombre = "Delivery estándar", descripcion = "Entrega en el día dentro del distrito.", costo = 5, requiereDireccion = true },
-    new { id = 3, nombre = "Delivery express", descripcion = "Entrega en 60 minutos.", costo = 8, requiereDireccion = true }
-}));
+app.MapGet("/api/entregas", () => Results.Ok(entregasData));
 
 app.MapGet("/api/pedidos", () => Results.Ok(pedidos));
 
